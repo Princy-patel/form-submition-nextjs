@@ -6,7 +6,7 @@ function RestaurantNavbar() {
       <Link href={"/restaurant/cnf"} className="mr-7">
         Overview
       </Link>
-      <Link href={"/restaurant/cnf/menu"} className="mr-7">
+      <Link href={"/restaurant/menu"} className="mr-7">
         Menu
       </Link>
     </nav>

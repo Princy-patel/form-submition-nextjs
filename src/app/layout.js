@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,8 +14,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <Header /> */}
-        {children}
+        <main className="bg-gray-100 min-h-screen w-screen">
+          <main className="max-w-screen-2xl m-auto bg-white">
+            <Navbar />
+            <Header />
+            <div className="flex py-4 m-auto w-2/3 justify-between items-start">
+              {children}
+            </div>
+          </main>
+        </main>
       </body>
     </html>
   );
