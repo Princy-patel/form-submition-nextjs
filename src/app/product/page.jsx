@@ -1,25 +1,41 @@
 "use client";
 
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 
 function Users() {
   const [data, setData] = useState(null);
   const [search, setSearch] = useState("");
 
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const fetchData = async function () {
+    const fetchData = async function (search) {
       const response = await fetch(
-        `https://fakestoreapi.com/products?sort=${search}`
+        `https://fakestoreapi.com/products?limit=${search}`
       );
       const result = await response.json();
       setData(result);
     };
-    fetchData();
-  }, [search]);
+
+    const query = searchParams.get("limit");
+    if (query) {
+      setSearch(query);
+      fetchData(query);
+    }
+  }, [search, searchParams]);
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+    const params = new URLSearchParams(window.location.search);
+    params.set("limit", value);
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -27,7 +43,7 @@ function Users() {
       <input
         type="text"
         placeholder="Search..."
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={handleSearchChange}
         className="w-full p-2 border border-grey-300 rounded-lg"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
