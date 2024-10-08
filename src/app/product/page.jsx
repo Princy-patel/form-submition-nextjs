@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { useEffect, useState } from "react";
-import { set } from "react-hook-form";
 
 function Users() {
   const [data, setData] = useState(null);
