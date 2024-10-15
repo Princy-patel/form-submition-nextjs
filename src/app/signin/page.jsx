@@ -16,7 +16,7 @@ function SignUp() {
     if (state.data) {
       setTableData([...tableData, state]);
     }
-  }, [state.data]);
+  }, [state, state.data, tableData]);
 
   return (
     <div className="container">
