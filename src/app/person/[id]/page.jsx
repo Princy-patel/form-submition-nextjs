@@ -1,9 +1,12 @@
 "use client";
 
+import { useData } from "@/context/DataContext";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 function UserPage() {
+  const { data: contextData } = useData();
   const { id } = useParams();
 
   const [data, setData] = useState(null);
@@ -14,6 +17,7 @@ function UserPage() {
         `https://jsonplaceholder.typicode.com/todos/${id}`
       );
       const result = await response.json();
+
       setData(result);
     };
 
@@ -24,6 +28,12 @@ function UserPage() {
     <div>
       <h1>Title:{data && data.title}</h1>
       <h1>UserId:{data && data.userId}</h1>
+
+      {contextData?.map((item) => (
+        <p key={item.id}>
+          <li>{item.title}</li>
+        </p>
+      ))}
     </div>
   );
 }
