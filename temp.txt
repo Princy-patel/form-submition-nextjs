@@ -1,0 +1,33 @@
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+const BrandsPage = () => {
+  const router = useRouter();
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    const handleRouteChangeStart = () => {
+      setScrollPosition(window.scrollY);
+    };
+
+    const handleRouteChangeComplete = () => {
+      window.scrollTo(0, scrollPosition);
+    };
+
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+      router.events.off('routeChangeComplete', handleRouteChangeComplete);
+    };
+  }, [scrollPosition, router]);
+
+  return (
+    <div>
+      Hello
+    </div>
+  );
+};
+
+export default BrandsPage;

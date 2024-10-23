@@ -1,7 +1,6 @@
 "use client";
 
 import { useData } from "@/context/DataContext";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -26,8 +25,8 @@ function UserPage() {
 
   return (
     <div>
-      <h1>Title:{data && data.title}</h1>
-      <h1>UserId:{data && data.userId}</h1>
+      <h1>Title:{data?.title}</h1>
+      <h1>UserId:{data?.userId}</h1>
 
       {contextData?.map((item) => (
         <p key={item.id}>
