@@ -5,6 +5,7 @@ async function BrandPage() {
     cache: "no-store",
   });
   const result = await response.json();
+
   return (
     <div>
       {result.map((product) => {
