@@ -23,6 +23,7 @@ function Search() {
     fetchData();
   }, [searchParams]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce((searchText) => {
       const params = new URLSearchParams(searchParams.toString());
