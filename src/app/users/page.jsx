@@ -1,7 +1,8 @@
 "use client";
 
 import TableSkeleton from "@/skeletons/TableSkeleton";
-import { getUsers } from "@/slice/userSlice";
+import { deleteUserApi, getUsersApi } from "@/slice/userSlice";
+import Link from "next/link";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,8 +15,12 @@ function Users() {
       return;
     }
 
-    dispatch(getUsers());
+    dispatch(getUsersApi());
   }, [dispatch, error]);
+
+  const handleDelete = function (id) {
+    dispatch(deleteUserApi(id));
+  };
 
   return (
     <div>
@@ -41,28 +46,29 @@ function Users() {
                     <td className="py-3 px-4">{data.title}</td>
                     <td className="py-3 px-4">{data.body}</td>
                     <td className="py-3 px-4">
-                      <a
+                      <Link
                         href="#"
                         className="font-medium text-green-600 hover:text-green-800"
                       >
                         View
-                      </a>
+                      </Link>
                     </td>
                     <td className="py-3 px-4">
-                      <a
+                      <span
                         href="#"
-                        className="font-medium text-red-600 hover:text-red-800"
+                        className="font-medium text-red-600 hover:text-red-800 cursor-pointer"
+                        onClick={handleDelete.bind(null, data.id)}
                       >
                         Delete
-                      </a>
+                      </span>
                     </td>
                     <td className="py-3 px-4">
-                      <a
+                      <Link
                         href="#"
                         className="font-medium text-blue-600 hover:text-blue-800"
                       >
                         Edit
-                      </a>
+                      </Link>
                     </td>
                   </tr>
                 ))}
