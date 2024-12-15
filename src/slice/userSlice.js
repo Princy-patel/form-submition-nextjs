@@ -10,6 +10,29 @@ export const getUsersApi = createAsyncThunk("users/allUsers", async () => {
   }
 });
 
+export const addUserApi = createAsyncThunk("users/addUser", async (data) => {
+  try {
+    const generatedId = Date.now();
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify({
+        id: generatedId,
+        userId: data.userId,
+        title: data.title,
+        body: data.body,
+      }),
+    });
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    return error;
+  }
+});
+
 export const deleteUserApi = createAsyncThunk(
   "users/deleteUser",
   async (id) => {
@@ -50,6 +73,20 @@ const userSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getUsersApi.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // add users
+    builder.addCase(addUserApi.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(addUserApi.fulfilled, (state, action) => {
+      console.log("action playload", action.payload);
+      state.data.push(action.payload);
+      state.loading = false;
+    });
+    builder.addCase(addUserApi.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
