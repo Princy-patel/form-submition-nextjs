@@ -8,7 +8,7 @@ async function BrandPage() {
 
   return (
     <div>
-      {result.map((product) => {
+      {result?.map((product) => {
         return (
           <div key={product.product_id}>
             <h1>
